@@ -37,4 +37,25 @@ public class SearchTest {
 
     }
 
+    @Test
+    public void byIdLocator() {
+        WebElement searchBox = driver.findElement(By.id("search"));
+        searchBox.sendKeys("Bags");
+        searchBox.submit();
+
+        Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
+    }
+
+    @Test
+    public void byClassName() {
+        WebElement searchBox = driver.findElement(By.id("search"));
+        searchBox.sendKeys("Electronics");
+
+        WebElement searchButton = driver.findElement(By.className("search-button"));
+        searchButton.click();
+
+        Assert.assertEquals(driver.getTitle(), "Search results for: 'Electronics'");
+    }
+
+
 }
