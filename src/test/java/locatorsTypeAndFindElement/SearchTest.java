@@ -1,31 +1,14 @@
-package chapter1;
+package locatorsTypeAndFindElement;
 
+import base.BaseTest;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class SearchTest {
-
-    private WebDriver driver;
-
-    @BeforeMethod
-    public void setup() {
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("http://demo-store.seleniumacademy.com/");
-    }
-
-    @AfterMethod
-    public void teardown() {
-        driver.quit();
-    }
+public class SearchTest extends BaseTest {
 
     @Test
     public void searchProduct() {
@@ -69,7 +52,7 @@ public class SearchTest {
     }
 
     @Test
-    public void byPartialLinkText(){
+    public void byPartialLinkText() {
         WebElement orderAndReturns = driver.findElement(By.partialLinkText("PRIVACY"));
 
         orderAndReturns.click();
