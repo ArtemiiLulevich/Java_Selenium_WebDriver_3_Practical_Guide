@@ -2,19 +2,77 @@ package base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 public class BaseTest {
 
     public WebDriver driver;
 
+    public String currentBrowser;
+    public Logger logger;
+
+
     @BeforeMethod
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("http://demo-store.seleniumacademy.com/");
+        logger = LoggerFactory.getLogger(BaseTest.class);
+        FileInputStream fis;
+        Properties property = new Properties();
+        try {
+            fis = new FileInputStream("src/test/resources/tests.properties");
+            property.load(fis);
+
+            currentBrowser = property.getProperty("base.current.browser");
+            logger.info("{} is a current browser", currentBrowser);
+
+        } catch (IOException e) {
+            logger.error("There is no file");
+        }
+
+        if (currentBrowser.equals("chrome")) {
+            ChromeOptions chromeOptions = new ChromeOptions();
+//            chromeOptions.setHeadless(false);
+
+            Map<String, String> mobileEmulation = new HashMap<>();
+            mobileEmulation.put("deviceName", "iPhone 6");
+
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+
+
+            System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver.exe");
+            driver = new ChromeDriver();
+        }
+
+        if (currentBrowser.equals("firefox")) {
+//            FirefoxProfile profile = new FirefoxProfile();
+//            profile.setPreference("general.useragent.override",
+//                    "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) "
+//                            + "AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 "
+//                            + "Mobile/15A356 Safari/604.1");
+//            FirefoxOptions firefoxOptions = new FirefoxOptions();
+////            firefoxOptions.setHeadless(true);
+//            firefoxOptions.setProfile(profile);
+
+            System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckodriver.exe");
+            driver = new FirefoxDriver();
+        }
+
+
+        String http = "http://demo-store.seleniumacademy.com/";
+
+        driver.get(http);
     }
+
 
     @AfterMethod
     public void teardown() {
