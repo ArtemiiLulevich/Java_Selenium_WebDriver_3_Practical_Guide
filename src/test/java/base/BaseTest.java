@@ -1,5 +1,8 @@
 package base;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +28,7 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void setup() {
+    public void setup() throws IOException {
         logger = LoggerFactory.getLogger(BaseTest.class);
         FileInputStream fis;
         Properties property = new Properties();
@@ -68,7 +72,10 @@ public class BaseTest {
         }
 
 
-        String http = "http://demo-store.seleniumacademy.com/";
+        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile, new File("./target/screenshot.png"));
+
+        String http = property.getProperty("base.start.http");
 
         driver.get(http);
     }

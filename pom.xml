@@ -14,6 +14,7 @@
         <testNg.version>7.5</testNg.version>
         <selenium.version>3.141.59</selenium.version>
         <slf4j-api.version>1.8.0-beta4</slf4j-api.version>
+        <common-io.version>2.11.0</common-io.version>
     </properties>
 
     <dependencies>
@@ -46,6 +47,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${common-io.version}</version>
+        </dependency>
 
     </dependencies>
 
