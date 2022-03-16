@@ -44,4 +44,25 @@ public class FeaturesOfWebDriver extends BaseTest {
 
     }
 
+    @Test
+    public void searchProduct() throws InterruptedException {
+        driver.navigate().to("http://demo-store.seleniumacademy.com/");
+
+        WebElement searchBox = driver.findElement(By.name("q"));
+
+        searchBox.sendKeys("Phones");
+
+        WebElement searchButton = driver.findElement(By.className("search-button"));
+
+        searchButton.click();
+        Thread.sleep(2500);
+        driver.navigate().back();
+        Thread.sleep(2500);
+        driver.navigate().forward();
+        Thread.sleep(2500);
+        driver.navigate().refresh();
+        Thread.sleep(2500);
+    }
+
+
 }
