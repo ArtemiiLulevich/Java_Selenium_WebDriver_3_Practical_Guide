@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
@@ -78,6 +79,7 @@ public class BaseTest {
         String http = property.getProperty("base.start.http");
 
         driver.get(http);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
 
