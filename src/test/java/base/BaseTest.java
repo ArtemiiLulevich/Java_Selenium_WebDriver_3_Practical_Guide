@@ -9,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.testng.annotations.BeforeMethod;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +30,9 @@ public class BaseTest {
     public EventFiringWebDriver eventFiringWebDriver;
 
     public String currentBrowser;
+    public String remoteBrowser;
+    public String remoteHost;
+    public boolean remoteWork;
     public Logger logger;
 
 
@@ -40,16 +46,27 @@ public class BaseTest {
             property.load(fis);
 
             currentBrowser = property.getProperty("base.current.browser");
-            logger.info("{} is a current browser", currentBrowser);
+
+            remoteWork = Boolean.parseBoolean(property.getProperty("base.mode.remote"));
+            remoteHost = property.getProperty("base.remote.host");
+            remoteBrowser = property.getProperty("base.remote.browser");
+            if (remoteWork) {
+                logger.info("Remote work mode is On.\n" +
+                        "Host - {}\n" +
+                        "browser - {}", remoteHost, remoteBrowser);
+            } else {
+                logger.info("{} is a current browser", currentBrowser);
+            }
 
         } catch (IOException e) {
             logger.error("There is no file");
         }
 
-        if (currentBrowser.equals("chrome")) {
-            ChromeOptions chromeOptions = new ChromeOptions();
+        if (!remoteWork) {
+            if (currentBrowser.equals("chrome")) {
+                ChromeOptions chromeOptions = new ChromeOptions();
 //            chromeOptions.setHeadless(false);
-            chromeOptions.addArguments("--start-maximized");
+                chromeOptions.addArguments("--start-maximized");
 
 //            Map<String, String> mobileEmulation = new HashMap<>();
 //            mobileEmulation.put("deviceName", "iPhone 6");
@@ -57,24 +74,32 @@ public class BaseTest {
 //            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 
 
-            System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver.exe");
-            driver = new ChromeDriver(chromeOptions);
-        }
+                System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver.exe");
+                driver = new ChromeDriver(chromeOptions);
+            }
 
-        if (currentBrowser.equals("firefox")) {
+            if (currentBrowser.equals("firefox")) {
 //            FirefoxProfile profile = new FirefoxProfile();
 //            profile.setPreference("general.useragent.override",
 //                    "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) "
 //                            + "AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 "
 //                            + "Mobile/15A356 Safari/604.1");
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
 //            firefoxOptions.setHeadless(true);
 //            firefoxOptions.setProfile(profile);
 
-            System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckodriver.exe");
-            driver = new FirefoxDriver();
-            driver.manage().window().maximize();
+                System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckodriver.exe");
+                driver = new FirefoxDriver();
+                driver.manage().window().maximize();
+            }
+        } else {
+            if (remoteBrowser.equals("chrome")) {
+                DesiredCapabilities caps = new DesiredCapabilities();
+                caps.setBrowserName(remoteBrowser);
+                driver = new RemoteWebDriver(new URL(remoteHost), caps);
+            }
         }
+
 
         eventFiringWebDriver = new EventFiringWebDriver(driver);
         AbstractListener eventListener = new AbstractListener();
