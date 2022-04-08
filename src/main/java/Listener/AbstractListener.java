@@ -23,11 +23,11 @@ public class AbstractListener extends AbstractWebDriverEventListener {
 
         try {
             JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-// Get the Load Event End
+                // Get the Load Event End
             long loadEventEnd = (Long) jsExecutor.executeScript("return window.performance.timing.loadEventEnd;");
-// Get the Navigation Event Start
+            // Get the Navigation Event Start
             long navigationStart = (Long) jsExecutor.executeScript("return window.performance.timing.navigationStart;");
-// Difference between Load Event End and Navigation Event Start is // Page Load Time
+            // Difference between Load Event End and Navigation Event Start is // Page Load Time
             System.out.println("Page Load Time is " + (loadEventEnd - navigationStart) / 1000 + " seconds.");
         } catch (Exception e) {
             e.printStackTrace();

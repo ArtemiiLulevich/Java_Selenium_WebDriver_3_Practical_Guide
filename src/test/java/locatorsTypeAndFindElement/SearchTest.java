@@ -3,6 +3,8 @@ package locatorsTypeAndFindElement;
 import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -27,6 +29,9 @@ public class SearchTest extends BaseTest {
         WebElement searchBox = driver.findElement(By.id("search"));
         searchBox.sendKeys("Bags");
         searchBox.submit();
+
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.titleIs("Search results for: 'Bags'"));
 
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
     }
@@ -83,6 +88,9 @@ public class SearchTest extends BaseTest {
         searchBox.sendKeys("Bags");
         searchBox.submit();
 
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.titleIs("Search results for: 'Bags'"));
+
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
     }
 
@@ -93,7 +101,9 @@ public class SearchTest extends BaseTest {
 
         searchBox.sendKeys("Bags");
         searchBox.submit();
-
+//        new WebDriverWait(driver, 10);
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.titleIs("Search results for: 'Bags'"));
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
     }
 

@@ -3,12 +3,12 @@ package base;
 import Listener.AbstractListener;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -30,6 +30,7 @@ public class BaseTest {
     public EventFiringWebDriver eventFiringWebDriver;
 
     public String currentBrowser;
+    public String remotePlatform;
     public String remoteBrowser;
     public String remoteHost;
     public boolean remoteWork;
@@ -50,10 +51,13 @@ public class BaseTest {
             remoteWork = Boolean.parseBoolean(property.getProperty("base.mode.remote"));
             remoteHost = property.getProperty("base.remote.host");
             remoteBrowser = property.getProperty("base.remote.browser");
+            remotePlatform = property.getProperty("base.remote.platform");
+
             if (remoteWork) {
                 logger.info("Remote work mode is On.\n" +
                         "Host - {}\n" +
-                        "browser - {}", remoteHost, remoteBrowser);
+                        "Platform - {}\n" +
+                        "browser - {}", remoteHost, remotePlatform, remoteBrowser);
             } else {
                 logger.info("{} is a current browser", currentBrowser);
             }
@@ -84,7 +88,7 @@ public class BaseTest {
 //                    "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) "
 //                            + "AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 "
 //                            + "Mobile/15A356 Safari/604.1");
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
+//                FirefoxOptions firefoxOptions = new FirefoxOptions();
 //            firefoxOptions.setHeadless(true);
 //            firefoxOptions.setProfile(profile);
 
@@ -93,11 +97,20 @@ public class BaseTest {
                 driver.manage().window().maximize();
             }
         } else {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setPlatform(Platform.fromString(remotePlatform));
+
             if (remoteBrowser.equals("chrome")) {
-                DesiredCapabilities caps = new DesiredCapabilities();
                 caps.setBrowserName(remoteBrowser);
-                driver = new RemoteWebDriver(new URL(remoteHost), caps);
             }
+            if (remoteBrowser.equals("firefox")) {
+                caps.setBrowserName(remoteBrowser);
+                caps.setCapability("marionette", true);
+            }
+            if (remoteBrowser.equals("MicrosoftEdge")) {
+                caps.setBrowserName(remoteBrowser);
+            }
+            driver = new RemoteWebDriver(new URL(remoteHost), caps);
         }
 
 
@@ -119,8 +132,9 @@ public class BaseTest {
 
     @AfterMethod
     public void teardown() {
-        driver.close();
         driver.quit();
+//        driver.close();
+
     }
 
 }
