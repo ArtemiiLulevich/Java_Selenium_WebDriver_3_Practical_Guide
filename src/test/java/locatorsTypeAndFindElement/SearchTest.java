@@ -13,7 +13,7 @@ import java.util.List;
 public class SearchTest extends BaseTest {
 
     @Test
-    public void searchProduct() {
+    public void searchProduct() throws InterruptedException {
         WebElement searchBox = driver.findElement(By.name("q"));
         searchBox.sendKeys("Phones");
 
@@ -22,6 +22,7 @@ public class SearchTest extends BaseTest {
 
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Phones'");
 
+        Thread.sleep(10000);
     }
 
     @Test

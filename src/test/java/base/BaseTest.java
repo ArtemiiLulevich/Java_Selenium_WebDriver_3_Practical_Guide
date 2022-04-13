@@ -121,11 +121,10 @@ public class BaseTest {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File("./target/screenshot.png"));
 
-        String http = property.getProperty("base.start.http");
+//        String http = property.getProperty("base.start.http");
+//        driver.get(http);
 
-
-        driver.get(http);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
     }
 
