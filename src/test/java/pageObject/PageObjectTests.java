@@ -22,12 +22,11 @@ public class PageObjectTests extends BaseTest {
      * 5. Publish the post.
      */
     @Test
-    public void testAddNewPost() throws InterruptedException {
+    public void testAddNewPost() {
 
 //        AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
 //        adminLoginPage.login();
-        AdminLoginPage loginPage = PageFactory.initElements(driver, AdminLoginPage.class);
-
+        AdminLoginPage loginPage = new AdminLoginPage(driver).get();
 //        logger.info("Element displayed {} ", loginPage.isErrorExists());
 
         loginPage.login();

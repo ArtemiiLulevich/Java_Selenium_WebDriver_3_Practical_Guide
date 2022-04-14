@@ -124,7 +124,7 @@ public class BaseTest {
 //        String http = property.getProperty("base.start.http");
 //        driver.get(http);
 
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
     }
 
