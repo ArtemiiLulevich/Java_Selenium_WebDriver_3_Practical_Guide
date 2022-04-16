@@ -1,6 +1,8 @@
 package pageObject;
 
 import UI.Pages.AdminLoginPage;
+import UI.Pages.AdminPage;
+import UI.Pages.AllPostsPage;
 import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -26,10 +28,10 @@ public class PageObjectTests extends BaseTest {
 
 //        AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
 //        adminLoginPage.login();
-        AdminLoginPage loginPage = new AdminLoginPage(driver).get();
+//        AdminLoginPage loginPage = new AdminLoginPage(driver).get();
 //        logger.info("Element displayed {} ", loginPage.isErrorExists());
 
-        loginPage.login();
+//        loginPage.login();
 
 
         driver.get("http://127.0.0.1:8000/admin/blog/post/add/");
@@ -45,7 +47,7 @@ public class PageObjectTests extends BaseTest {
         WebElement submitPost = driver.findElement(By.name("_save"));
 
         Random random = new Random();
-        int intRandom = random.nextInt(25);
+        int intRandom = random.nextInt(33);
 
         title.sendKeys("My test post: " + intRandom);
         slug.sendKeys("Bla");
@@ -118,5 +120,16 @@ public class PageObjectTests extends BaseTest {
 
         Assert.assertEquals(countOfPosts.getText(), "1 posts", "Count not equals");
 
+    }
+
+
+    @Test
+    public void testAllPageObject() {
+        AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+
+        AdminPage adminPage = adminLoginPage.login();
+        AllPostsPage allPostsPage = adminPage.goToPosts();
+//
+//        allPostsPage.addNewPost("My test post: ", "Bla", "1", "Some words in post", "published", "new");
     }
 }
