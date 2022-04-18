@@ -14,6 +14,7 @@ import static org.testng.Assert.assertTrue;
 public class AddNewPostPage extends LoadableComponent<AddNewPostPage> {
 
     WebDriver driver;
+    Select dropdown;
 
     @FindBy(id = "id_title")
     WebElement title;
@@ -31,27 +32,32 @@ public class AddNewPostPage extends LoadableComponent<AddNewPostPage> {
     WebElement tags;
 
     @FindBy(id = "id_status")
-    Select select;
+    WebElement select;
+
 
     @FindBy(name = "_save")
     WebElement submitPost;
 
     public AddNewPostPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(this.driver, AddNewPostPage.class);
+        PageFactory.initElements(this.driver, this);
+        dropdown = new Select(select);
     }
 
-    public void addNewPost(String titleData, String slugData, String authorData, String bodyData, String selectData, String tagsData) {
+    public String addNewPost(String titleData, String slugData, String authorData, String bodyData, String selectData, String tagsData) {
         Random random = new Random();
         int intRandom = random.nextInt(33);
 
-        title.sendKeys(titleData + intRandom);
+        String postName = titleData + intRandom;
+
+        title.sendKeys(postName);
         slug.sendKeys(slugData);
         author.sendKeys(authorData);
         body.sendKeys(bodyData);
-        select.selectByValue(selectData);
+        dropdown.selectByValue(selectData);
         tags.sendKeys(tagsData);
         submitPost.submit();
+        return postName;
     }
 
     @Override

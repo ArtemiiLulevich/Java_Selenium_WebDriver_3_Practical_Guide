@@ -15,20 +15,32 @@ public class AllPostsPage extends LoadableComponent<AllPostsPage> {
     @FindBy(css = "a.addlink")
     WebElement addNewPost;
 
+    @FindBy(css = "li.success")
+    WebElement success;
+
 
     public AllPostsPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(this.driver, AllPostsPage.class);
+        PageFactory.initElements(this.driver, this);
     }
 
-
-    public void addNewPost(String title, String slug, String author, String body, String select, String tags) {
-//        addNewPost.click();
+    public String addNewPost(String title, String slug, String author, String body, String select, String tags) {
+        addNewPost.click();
         AddNewPostPage addNewPostPage = new AddNewPostPage(this.driver).get();
 
-        addNewPostPage.addNewPost(title, slug, author, body, select, tags);
+        return addNewPostPage.addNewPost(title, slug, author, body, select, tags);
     }
 
+    public boolean isSuccessDisplayed() {
+        return success.isDisplayed();
+    }
+
+    public String getSuccessMessage() {
+        if (isSuccessDisplayed()) {
+            return success.getText();
+        }
+        return null;
+    }
 
     @Override
     protected void load() {
@@ -37,6 +49,6 @@ public class AllPostsPage extends LoadableComponent<AllPostsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(driver.getCurrentUrl().contains("/blog/post/"));
+        assertTrue(this.driver.getCurrentUrl().contains("/blog/post/"));
     }
 }

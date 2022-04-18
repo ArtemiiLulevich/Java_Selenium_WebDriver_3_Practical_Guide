@@ -5,9 +5,12 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EventListener implements WebDriverEventListener {
 
+    Logger logger = LoggerFactory.getLogger(EventListener.class);
 
     @Override
     public void beforeAlertAccept(WebDriver driver) {
@@ -81,7 +84,7 @@ public class EventListener implements WebDriverEventListener {
 
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
-
+        logger.info("Click on {}", element.getText());
     }
 
     @Override
@@ -91,7 +94,7 @@ public class EventListener implements WebDriverEventListener {
 
     @Override
     public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-
+        logger.info("Set value {} to {}", keysToSend, element.getText());
     }
 
     @Override

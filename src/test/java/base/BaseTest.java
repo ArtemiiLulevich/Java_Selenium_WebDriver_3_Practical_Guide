@@ -1,6 +1,6 @@
 package base;
 
-import Listener.AbstractListener;
+import Listener.EventListener;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -115,8 +115,10 @@ public class BaseTest {
 
 
         eventFiringWebDriver = new EventFiringWebDriver(driver);
-        AbstractListener eventListener = new AbstractListener();
+        EventListener eventListener = new EventListener();
         eventFiringWebDriver.register(eventListener);
+
+        driver = eventFiringWebDriver;
 
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File("./target/screenshot.png"));

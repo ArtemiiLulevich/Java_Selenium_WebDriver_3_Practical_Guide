@@ -6,8 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
-public class AdminLoginPage {
+import static org.testng.Assert.assertTrue;
+
+public class AdminLoginPage extends LoadableComponent<AdminLoginPage> {
 
     WebDriver driver;
 
@@ -25,8 +28,8 @@ public class AdminLoginPage {
 
     public AdminLoginPage(WebDriver driver) {
         this.driver = driver;
-        this.driver.get("http://127.0.0.1:8000/admin/login/");
-        PageFactory.initElements(driver, this);
+
+        PageFactory.initElements(this.driver, this);
     }
 
     public AdminPage login() {
@@ -34,8 +37,7 @@ public class AdminLoginPage {
         pwd.sendKeys("admin");
         submitLogin.click();
 
-//        return new AdminPage(driver).get();
-        return new AdminPage(driver);
+        return new AdminPage(driver).get();
     }
 
     public boolean isErrorExists() {
@@ -46,17 +48,14 @@ public class AdminLoginPage {
         }
         return true;
     }
-//
-//    @Override
-//    protected void load() {
-//        this.driver.get("http://127.0.0.1:8000/admin/login/");
-//    }
-//
-//    @Override
-//    protected void isLoaded() throws Error {
-////        JavascriptExecutor js = (JavascriptExecutor) driver;
-////
-////        assertTrue(js.executeScript("return document.readyState").toString().equals("complete"));
-//        assertTrue(driver.getCurrentUrl().contains("/login/"));
-//    }
+
+    @Override
+    protected void load() {
+        this.driver.get("http://127.0.0.1:8000/admin/login/");
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        assertTrue(driver.getCurrentUrl().contains("/login/"));
+    }
 }

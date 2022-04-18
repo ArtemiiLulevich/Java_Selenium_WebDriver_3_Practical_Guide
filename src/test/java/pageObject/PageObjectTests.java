@@ -16,6 +16,12 @@ import java.util.Random;
 
 public class PageObjectTests extends BaseTest {
 
+    AdminLoginPage adminLoginPage;
+    AdminPage adminPage;
+
+    AllPostsPage allPostsPage;
+
+
     /**
      * 1. Log into the WordPress Admin portal.
      * 2. Go to the All Posts page.
@@ -125,11 +131,24 @@ public class PageObjectTests extends BaseTest {
 
     @Test
     public void testAllPageObject() {
-        AdminLoginPage adminLoginPage = new AdminLoginPage(driver);
+        adminLoginPage = new AdminLoginPage(driver);
 
-        AdminPage adminPage = adminLoginPage.login();
-        AllPostsPage allPostsPage = adminPage.goToPosts();
-//
-//        allPostsPage.addNewPost("My test post: ", "Bla", "1", "Some words in post", "published", "new");
+        adminLoginPage.get();
+        adminPage = adminLoginPage.login();
+
+        allPostsPage = adminPage.goToPosts();
+
+        String postName = allPostsPage.addNewPost("My test post: ", "Bla", "1",
+                "Some words in post", "published", "new");
+
+
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(allPostsPage.isSuccessDisplayed(), "Success not displayed.");
+        softAssert.assertEquals(allPostsPage.getSuccessMessage().toUpperCase().trim(),
+                String.format("The post \"%s\" was added successfully.", postName).toUpperCase().trim(),
+                "Text is not equals.");
+
+        softAssert.assertAll();
     }
 }

@@ -18,12 +18,12 @@ public class AdminPage extends LoadableComponent<AdminPage> {
 
     public AdminPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, AdminPage.class);
+        PageFactory.initElements(this.driver, this);
     }
 
     public AllPostsPage goToPosts() {
         posts.click();
-        return new AllPostsPage(driver);
+        return new AllPostsPage(this.driver);
     }
 
 
@@ -34,6 +34,6 @@ public class AdminPage extends LoadableComponent<AdminPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(driver.getCurrentUrl().contains("/admin/"));
+        assertTrue(this.driver.getCurrentUrl().contains("/admin/"));
     }
 }
