@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -104,8 +106,8 @@ public class BaseTest {
                 caps.setBrowserName(remoteBrowser);
             }
             if (remoteBrowser.equals("firefox")) {
-                caps.setBrowserName(remoteBrowser);
-                caps.setCapability("marionette", true);
+                caps.setBrowserName(Browser.FIREFOX.browserName());
+//                caps.setCapability("marionette", true);
             }
             if (remoteBrowser.equals("MicrosoftEdge")) {
                 caps.setBrowserName(remoteBrowser);
@@ -121,10 +123,10 @@ public class BaseTest {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File("./target/screenshot.png"));
 
-//        String http = property.getProperty("base.start.http");
-//        driver.get(http);
+        String http = property.getProperty("base.start.http");
+        driver.get(http);
 
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
     }
 

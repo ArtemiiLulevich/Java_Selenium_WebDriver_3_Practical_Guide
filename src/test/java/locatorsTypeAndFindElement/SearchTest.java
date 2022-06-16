@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 public class SearchTest extends BaseTest {
@@ -22,7 +23,6 @@ public class SearchTest extends BaseTest {
 
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Phones'");
 
-        Thread.sleep(10000);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SearchTest extends BaseTest {
         searchBox.sendKeys("Bags");
         searchBox.submit();
 
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofMillis(10))
                 .until(ExpectedConditions.titleIs("Search results for: 'Bags'"));
 
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
@@ -89,7 +89,7 @@ public class SearchTest extends BaseTest {
         searchBox.sendKeys("Bags");
         searchBox.submit();
 
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver,Duration.ofMillis(10))
                 .until(ExpectedConditions.titleIs("Search results for: 'Bags'"));
 
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
@@ -103,7 +103,7 @@ public class SearchTest extends BaseTest {
         searchBox.sendKeys("Bags");
         searchBox.submit();
 //        new WebDriverWait(driver, 10);
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofMillis(10))
                 .until(ExpectedConditions.titleIs("Search results for: 'Bags'"));
         Assert.assertEquals(driver.getTitle(), "Search results for: 'Bags'");
     }
