@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AdvancedInteractionsTests extends BaseTest {
+public class AdvancedInteractionsTest extends BaseTest {
 
     @Test
     public void shouldPerformCompositeAction() {

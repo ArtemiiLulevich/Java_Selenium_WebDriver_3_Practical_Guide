@@ -1,6 +1,8 @@
 package locatorsTypeAndFindElement;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Flaky;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,10 +13,11 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.List;
 
+@Flaky
 public class SearchTest extends BaseTest {
 
-    @Test
-    public void searchProduct() throws InterruptedException {
+    @Test(description = "Search phones")
+    public void searchProduct() {
         WebElement searchBox = driver.findElement(By.name("q"));
         searchBox.sendKeys("Phones");
 

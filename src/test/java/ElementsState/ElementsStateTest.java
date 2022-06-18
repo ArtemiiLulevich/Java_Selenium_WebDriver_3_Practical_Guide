@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-public class ElementsState extends BaseTest {
+public class ElementsStateTest extends BaseTest {
 
     @Test
     public void isDisplayedExample() {

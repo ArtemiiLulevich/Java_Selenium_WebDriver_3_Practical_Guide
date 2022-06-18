@@ -2,4 +2,7 @@
 /target/
 /.idea
 /build
+/test-output
+/allure-report
+/.allure
 *.exe

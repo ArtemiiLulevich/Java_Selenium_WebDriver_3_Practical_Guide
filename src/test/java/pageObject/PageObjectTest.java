@@ -12,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.Random;
 
-public class PageObjectTests extends BaseTest {
+public class PageObjectTest extends BaseTest {
 
     /**
      * 1. Log into the WordPress Admin portal.

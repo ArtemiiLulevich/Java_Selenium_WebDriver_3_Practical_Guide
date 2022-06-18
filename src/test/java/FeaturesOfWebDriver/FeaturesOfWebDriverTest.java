@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.StringTokenizer;
 
-public class FeaturesOfWebDriver extends BaseTest {
+public class FeaturesOfWebDriverTest extends BaseTest {
 
 
     @Test

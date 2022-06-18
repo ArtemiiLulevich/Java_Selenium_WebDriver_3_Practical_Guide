@@ -3,7 +3,7 @@ package WebDriverEvents;
 import base.BaseTest;
 import org.testng.annotations.Test;
 
-public class Events extends BaseTest {
+public class EventsTest extends BaseTest {
 
     @Test
     public void navigateToAndBack() {

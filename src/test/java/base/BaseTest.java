@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -108,6 +109,9 @@ public class BaseTest {
             if (remoteBrowser.equals("firefox")) {
                 caps.setBrowserName(Browser.FIREFOX.browserName());
 //                caps.setCapability("marionette", true);
+                FirefoxOptions options = new FirefoxOptions();
+                options.setHeadless(true);
+                caps.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
             }
             if (remoteBrowser.equals("MicrosoftEdge")) {
                 caps.setBrowserName(remoteBrowser);

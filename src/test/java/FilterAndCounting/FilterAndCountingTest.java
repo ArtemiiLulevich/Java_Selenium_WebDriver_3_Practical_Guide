@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FilterAndCounting extends BaseTest {
+public class FilterAndCountingTest extends BaseTest {
 
     @Test
     public void linkTest() {
