@@ -1,8 +1,8 @@
 package locatorsTypeAndFindElement;
 
+import UI.store.MainPage;
 import base.BaseTest;
-import io.qameta.allure.Description;
-import io.qameta.allure.Flaky;
+import io.qameta.allure.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,7 +13,9 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.List;
 
-@Flaky
+@Link("https://makeup.com.ua/")
+@Epic("Allure examples")
+@Feature("TestNG support")
 public class SearchTest extends BaseTest {
 
     @Test(description = "Search phones")
@@ -29,6 +31,7 @@ public class SearchTest extends BaseTest {
     }
 
     @Test
+    @Description("Search bags by id.")
     public void byIdLocator() {
         WebElement searchBox = driver.findElement(By.id("search"));
         searchBox.sendKeys("Bags");
@@ -119,4 +122,21 @@ public class SearchTest extends BaseTest {
         Assert.assertEquals(driver.getTitle(), "About Us");
     }
 
+    @Flaky
+    @Test(description = "Test allure steps")
+    @Description("Test allure steps")
+    @Issue("998412")
+    @TmsLink("998412")
+    @Link(name = "998412", type = "mylink")
+    @Severity(SeverityLevel.TRIVIAL)
+    @Story("Base support for bdd annotations")
+    @Story("Advanced support for bdd annotations")
+    public void myOwnAllureTest() {
+        MainPage mainPage = new MainPage(driver);
+        mainPage.searchByName("Phones");
+
+
+        Assert.fail();
+//        Assert.assertEquals(driver.getTitle(), "Search results for: 'Phones'");
+    }
 }

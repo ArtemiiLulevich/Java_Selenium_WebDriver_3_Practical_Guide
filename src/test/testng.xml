@@ -4,7 +4,11 @@
 <suite name="Search Suite" verbose="1">
     <test name="First Test" >
         <classes>
-            <class name="locatorsTypeAndFindElement.SearchTest"/>
+            <class name="locatorsTypeAndFindElement.SearchTest">
+                <methods>
+                    <include name="myOwnAllureTest"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

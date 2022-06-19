@@ -1,4 +1,4 @@
-package UI.Pages;
+package UI.Blog;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;

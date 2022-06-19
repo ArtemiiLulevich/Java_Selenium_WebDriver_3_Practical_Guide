@@ -1,6 +1,6 @@
 package pageObject;
 
-import UI.Pages.AdminLoginPage;
+import UI.Blog.AdminLoginPage;
 import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
